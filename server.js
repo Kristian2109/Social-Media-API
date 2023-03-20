@@ -13,7 +13,7 @@ app.use(cors());
 
 app.use("/api/v1", require("./routes/auth"));
 app.use("/api/v1", require("./routes/users.route"));
-
+app.use("/api/v1", require("./routes/posts.route"));
 
 app.listen(process.env.PORT, () => {
     console.log("App is listening on Port " + process.env.PORT);

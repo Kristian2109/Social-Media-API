@@ -2,7 +2,7 @@ const User = require("../model/user");
 const router = require("express").Router();
 const authUser = require("../middleware/verifyAuth");
 
-router.post("/edit-user", authUser, async (req, res) => {
+router.post("/edit-user/", authUser, async (req, res) => {
     const userId = req.user.id;
     const { name, email, password } = req.body;
 
@@ -27,7 +27,7 @@ router.get("/user", authUser, async (req, res) => {
     }
 });
 
-router.delete("/delete-user", authUser, async (req, res) => {
+router.delete("/delete-user/:userId", authUser, async (req, res) => {
     try {
         const userIdToDelete = req.body.idToDelete;
         if (userIdToDelete === req.user.id) {

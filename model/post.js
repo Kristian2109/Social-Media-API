@@ -19,11 +19,12 @@ const postSchema = new mongoose.Schema({
     toObject: { virtuals: true }
 });
 
-postSchema.pre("save", (next) => {
+postSchema.pre('save', async (next) => {
     const date = new Date();
     const dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/"
                      + date.getFullYear();
     this.createdAt = dateString;
+    next();
 });
 
 postSchema.virtual("postedBy", {
@@ -31,13 +32,6 @@ postSchema.virtual("postedBy", {
     localField: "userId",
     foreignField: "_id",
     justOne: true
-});
-
-postSchema.pre("save", (next) => {
-    const date = new Date();
-    const dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/"
-                     + date.getFullYear();
-    this.createdAt = dateString;
 });
 
 postSchema.virtual("comments", {
