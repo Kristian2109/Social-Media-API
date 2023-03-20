@@ -1,0 +1,27 @@
+POST http://localhost:3000/api/v1/create-post
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTMzOTMzNSwiZXhwIjoxNjc5MzQwNTM1fQ.GklCREM7ldJwEEBsHipCabKvaztjBcTZLlU26y1eqT4",
+    "title": "Another history",
+    "content": "How the life can change the way you think."
+}
+
+###
+
+GET http://localhost:3000/api/v1/posts-following
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTM0MDYwOSwiZXhwIjoxNjc5MzQxODA5fQ.L-1UFek0qD_OK6KSaYBR1wDme4omWcVETcyn1NFHGQ4"
+}
+
+###
+
+PATCH http://localhost:3000/api/v1/modify-post/6418b0ec9756754d11eb0602
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTM0MTU4NiwiZXhwIjoxNjc5MzQyNzg2fQ.aCKEM88ADKX0dsXPqpnKhahQ4h8bZfE1wwpYW5DT6Jo",
+    "content": "I was attacked by murders."
+}

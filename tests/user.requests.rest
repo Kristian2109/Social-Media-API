@@ -1,0 +1,78 @@
+// ------------- Register ------------- \\
+POST http://localhost:3000/api/v1/register
+Content-Type: application/json
+
+{
+    "name": "Pesho",
+    "password": "123",
+    "age": 20,
+    "email": "pesho.petrov1998@gmail.com"
+}
+
+###
+// ------------- Login ------------- \\
+POST http://localhost:3000/api/v1/login
+Content-Type: application/json
+
+{
+    "password": "123",
+    "email": "kristian.petrov1998@gmail.com"
+
+}
+
+// ------------- Get Access Token ------------- \\
+###
+POST http://localhost:3000/api/v1/token
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTM0MTU4NiwiZXhwIjoxNjgwMjA1NTg2fQ.PxDj08EpHZqA5banmVjUU_19PnDYyHGdwxBAbAwVD7s"
+}
+
+###
+// ------------- Logout/delete refresh token ------------- \\
+PATCH http://localhost:3000/api/v1/logout
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTMyNzUzOSwiZXhwIjoxNjgwMTkxNTM5fQ.P-X3BvqFBEBUD1p2-ON6UYqkPJF0JOTL4Pe627hcPYo"
+}
+
+###
+// ------------- Edit user ------------- \\
+POST http://localhost:3000/api/v1/edit-user
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTMzNDc1MiwiZXhwIjoxNjc5MzM1OTUyfQ.3bbFUens0e2Hqin7oyYvfrwVJN5ogvgPvQd9eYR-AJ8",
+    "name": "Krisko"
+}
+
+### 
+// ------------- Get user with posts ------------- \\
+GET http://localhost:3000/api/v1/user
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTM0MDYwOSwiZXhwIjoxNjc5MzQxODA5fQ.L-1UFek0qD_OK6KSaYBR1wDme4omWcVETcyn1NFHGQ4"
+}
+
+###
+// ------------- Follow ------------- \\
+GET http://localhost:3000/api/v1/follow-user
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTM0MDYwOSwiZXhwIjoxNjc5MzQxODA5fQ.L-1UFek0qD_OK6KSaYBR1wDme4omWcVETcyn1NFHGQ4",
+    "idToFollow": "64183d84d63579a2626637dc"
+}
+
+###
+// ------------- Unfollow ------------- \\
+GET http://localhost:3000/api/v1/unfollow-user
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MThhMzE0Njk1MmNlMTdjYjMwZWJiYyIsImlhdCI6MTY3OTMzNjIxMywiZXhwIjoxNjc5MzM3NDEzfQ.OgQOq22Fu6MpGM1qYJCbtrQY-5zS3-keStw-DuhoWR8",
+    "idToUnfollow": "64183d84d63579a2626637dc"
+}
