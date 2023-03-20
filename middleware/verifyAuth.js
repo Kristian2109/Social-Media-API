@@ -3,7 +3,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 function verifyAuthentication(req, res, next) {
-    const authToken = req.header("x-token");
+    const authToken = req.body.accessToken;
 
     if (!authToken) {
         res.status(401).json({
@@ -13,8 +13,9 @@ function verifyAuthentication(req, res, next) {
     }
 
     try {
-        const decoded = jwt.verify(authToken, process.env.JWR_ACCESS_TOKEN);
-        res.status(200).json({data: decoded, success: true})
+        const user = jwt.verify(authToken, process.env.JWR_ACCESS_TOKEN);
+        res.sendStatus(200);
+        req.user = user;
         next();
     } catch (error) {
         console.log(error);

@@ -18,3 +18,20 @@ Content-Type: application/json
     "email": "kristian.petrov1998@gmail.com"
 
 }
+
+###
+POST http://localhost:3000/api/v1/token
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTMyNzUzOSwiZXhwIjoxNjgwMTkxNTM5fQ.P-X3BvqFBEBUD1p2-ON6UYqkPJF0JOTL4Pe627hcPYo"
+}
+
+###
+
+PATCH http://localhost:3000/api/v1/logout
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTMyNzUzOSwiZXhwIjoxNjgwMTkxNTM5fQ.P-X3BvqFBEBUD1p2-ON6UYqkPJF0JOTL4Pe627hcPYo"
+}
