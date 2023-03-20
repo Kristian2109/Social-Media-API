@@ -1,0 +1,20 @@
+POST http://localhost:3000/api/v1/register
+Content-Type: application/json
+
+{
+    "name": "Kristian",
+    "password": "123",
+    "age": 20,
+    "email": "kristian.petrov1998@gmail.com"
+}
+
+###
+
+POST http://localhost:3000/api/v1/login
+Content-Type: application/json
+
+{
+    "password": "123",
+    "email": "kristian.petrov1998@gmail.com"
+
+}

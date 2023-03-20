@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 
+const ROLES = {
+    ADMIN: "Admin",
+    USER: "User"
+}
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -20,6 +25,10 @@ const userSchema = new mongoose.Schema({
         min: 12,
         max: 112
     },
+    role: {
+        type: String,
+        default: "User"
+    },
     followers: Array,
     following: Array,
     createdAt: String,
@@ -34,6 +43,7 @@ userSchema.pre("save", (next) => {
     const dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/"
                      + date.getFullYear();
     this.createdAt = dateString;
+    next();
 });
 
 userSchema.virtual("posts", {
