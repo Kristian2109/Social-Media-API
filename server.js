@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/v1", require("./routes/auth"));
+app.use("/api/v1", require("./routes/users.route"));
 
 
 app.listen(process.env.PORT, () => {
