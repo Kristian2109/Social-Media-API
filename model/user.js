@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 
-const ROLES = {
-    ADMIN: "Admin",
-    USER: "User"
-}
+const { ROLES } = require("../middleware/permissions");
+
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -27,7 +25,7 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        default: "User"
+        default: ROLES.USER,
     },
     refreshTokenJWT: {
         type: String,

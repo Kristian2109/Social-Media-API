@@ -28,7 +28,11 @@ router.post("/register", async (req, res) => {
         const hashedPass = await bcrypt.hash(password, salt);
         newUser.password = hashedPass;
 
-        const accessToken = createAccessToken({id: newUser._id});
+        const payload = {
+            id: newUser._id,
+            role: newUser.role
+        }
+        const accessToken = createAccessToken(payload);
         const refreshToken = createRefreshToken({id: newUser._id});
 
         newUser.refreshTokenJWT = refreshToken;
@@ -100,7 +104,7 @@ router.post("/token", async (req, res) => {
             return res.status(403).json({error: "Invalid token!", success: false});
         }
 
-        const accessToken = createAccessToken({id: decoded.id});
+        const accessToken = createAccessToken({id: decoded.id, role: decoded.role});
         return res.status(200).json({accessToken});
 
     } catch (error) {

@@ -11,7 +11,10 @@ const postSchema = new mongoose.Schema({
         required: true
     },
     content: String,
-    createdAt: String,
+    createdAt: {
+        type: String,
+        default: currentDateString
+    },
     likes: Array,
     photo: Buffer
 }, {
@@ -19,13 +22,18 @@ const postSchema = new mongoose.Schema({
     toObject: { virtuals: true }
 });
 
-postSchema.pre('save', async (next) => {
+function currentDateString() {
     const date = new Date();
-    const dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/"
-                     + date.getFullYear();
-    this.createdAt = dateString;
-    next();
-});
+    return  date.getFullYear() + "/"+ (date.getMonth() + 1) + "/" +
+            date.getDate() + "/" + date.getHours() + "/" + date.getMinutes();
+}
+
+// postSchema.pre('save', async (next) => {
+//     const date = new Date();
+//     const dateString = 
+//     this.createdAt = dateString;
+//     next();
+// });
 
 postSchema.virtual("postedBy", {
     ref: "User",

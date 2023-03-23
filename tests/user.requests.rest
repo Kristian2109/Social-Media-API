@@ -6,7 +6,7 @@ Content-Type: application/json
     "name": "Pesho",
     "password": "123",
     "age": 20,
-    "email": "pesho.petrov1998@gmail.com"
+    "email": "kristian.petrov1998@gmail.com"
 }
 
 ###

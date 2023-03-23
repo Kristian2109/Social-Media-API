@@ -2,8 +2,8 @@ POST http://localhost:3000/api/v1/create-post
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTMzOTMzNSwiZXhwIjoxNjc5MzQwNTM1fQ.GklCREM7ldJwEEBsHipCabKvaztjBcTZLlU26y1eqT4",
-    "title": "Another history",
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsImlhdCI6MTY3OTU2NTM5NywiZXhwIjoxNjc5NTY2NTk3fQ.oZna4qaW54ZyGSyEJ7J5ri-oNDKGkuNyyn-dAPq-Bu8",
+    "title": "Right date",
     "content": "How the life can change the way you think."
 }
 
@@ -18,10 +18,10 @@ Content-Type: application/json
 
 ###
 
-PATCH http://localhost:3000/api/v1/modify-post/6418b0ec9756754d11eb0602
+PATCH http://localhost:3000/api/v1/modify-post/641c16bff29e0b12a7ae8277/641c16f0f29e0b12a7ae8279
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTM0MTU4NiwiZXhwIjoxNjc5MzQyNzg2fQ.aCKEM88ADKX0dsXPqpnKhahQ4h8bZfE1wwpYW5DT6Jo",
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsImlhdCI6MTY3OTU2MjcwNSwiZXhwIjoxNjc5NTYzOTA1fQ.889JGBy6xcOqqxhezcynTcGAag4Cz412X-9OUFjEK5Y",
     "content": "I was attacked by murders."
 }
