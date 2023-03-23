@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const { ROLES } = require("../middleware/permissions");
-
+const { currentDateString } = require("./dataFunctions");
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -31,21 +31,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         select: false
     },
+    createdAt: {
+        type: String,
+        default: currentDateString
+    },
     followers: Array,
     following: Array,
-    createdAt: String,
     profilePicture: Buffer
 }, {
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
-});
-
-userSchema.pre("save", (next) => {
-    const date = new Date();
-    const dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/"
-                     + date.getFullYear();
-    this.createdAt = dateString;
-    next();
 });
 
 userSchema.virtual("posts", {

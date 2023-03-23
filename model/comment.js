@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { currentDateString } = require("./dataFunctions");
 
 const commentSchema = new mongoose.Schema({
     userId: {
@@ -11,16 +12,13 @@ const commentSchema = new mongoose.Schema({
       ref: "Post",
       required: true
     },
-    createdAt: String,
+    createdAt: {
+      type: String,
+      default: currentDateString
+  },
     content: String,
-    likes: Array
-});
-
-commentSchema.pre("save", (next) => {
-    const date = new Date();
-    const dateString = date.getDate() + "/" + (date.getMonth() + 1) + "/"
-                     + date.getFullYear();
-    this.createdAt = dateString;
+    likes: Array,
+    image: Buffer
 });
 
 const Comment = mongoose.model("Comment", commentSchema);

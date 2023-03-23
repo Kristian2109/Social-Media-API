@@ -4,6 +4,21 @@ const router = require("express").Router();
 const verifyToken = require("../middleware/verifyAuth");
 const { authorize } = require("../middleware/permissions");
 
+// POST | /api/v1/posts/:postId | get a post with all comments | private
+router.get("/posts/:postId", verifyToken, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.postId).populate("comments");
+        if (!post) {
+            return res.status(400).json({error: "Unexisting post", success: false});
+        }
+
+        return res.status(200).json({post, success: true});
+    } catch (error) {
+        console.log(error.message);
+        return res.sendStatus(500);
+    }
+})
+
 // POST | /api/v1/create-post | current user adds a post | private
 router.post("/create-post", verifyToken, async (req, res) => {
     try {
@@ -29,7 +44,7 @@ router.post("/create-post", verifyToken, async (req, res) => {
 async function getPostsOfUsersWithPagination(page, limit, idsOfFollowed) {
     const postsOfFollowing = await Post.find({
         userId: idsOfFollowed
-    }).sort({createdAt}).skip(page - 1).limit(limit);
+    }).sort("createdAt").skip(page - 1).limit(limit);
     return postsOfFollowing;
 }
 
@@ -38,6 +53,7 @@ router.get("/posts-following/:userId", verifyToken, authorize, async (req, res) 
     try {
         const currentUser = await User.findById(req.params.userId);
         const currentUserFollowing = currentUser.following;
+        console.log(currentUserFollowing);
 
         const postsOfFollowed = await getPostsOfUsersWithPagination(req.query.page, req.query.limit, currentUserFollowing);
 

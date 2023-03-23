@@ -9,6 +9,7 @@ function canUserSeePosts(currentUser, userIdToVisit) {
 
 function authorize(req, res, next) {
     if (!canUserSeePosts(req.user, req.params.userId)) {
+        console.log(req.user);
         return res.sendStatus(401);
     }
 

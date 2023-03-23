@@ -26,7 +26,7 @@ POST http://localhost:3000/api/v1/token
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTM0MTU4NiwiZXhwIjoxNjgwMjA1NTg2fQ.PxDj08EpHZqA5banmVjUU_19PnDYyHGdwxBAbAwVD7s"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNTdhOTM4OWZkOWU3OTc1MmRiNSIsImlhdCI6MTY3OTU2MjUwNSwiZXhwIjoxNjgwNDI2NTA1fQ.h8vhUe4A24Ob5_HLRFRv5l2gJYwISl6XsZ_jIKvf3gQ"
 }
 
 ###
@@ -40,39 +40,37 @@ Content-Type: application/json
 
 ###
 // ------------- Edit user ------------- \\
-POST http://localhost:3000/api/v1/edit-user
+PATCH http://localhost:3000/api/v1/edit-user/641c16bff29e0b12a7ae8277
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTMzNDc1MiwiZXhwIjoxNjc5MzM1OTUyfQ.3bbFUens0e2Hqin7oyYvfrwVJN5ogvgPvQd9eYR-AJ8",
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNTdhOTM4OWZkOWU3OTc1MmRiNSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY3OTU3NzY5MywiZXhwIjoxNjc5NTc4ODkzfQ.9htwYqyuV7JcDiniaqZL6OnOIPJxXTPTl8Fr9T-SPl0",
     "name": "Krisko"
 }
 
 ### 
 // ------------- Get user with posts ------------- \\
-GET http://localhost:3000/api/v1/user
+GET http://localhost:3000/api/v1/user/641c16bff29e0b12a7ae8277
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTM0MDYwOSwiZXhwIjoxNjc5MzQxODA5fQ.L-1UFek0qD_OK6KSaYBR1wDme4omWcVETcyn1NFHGQ4"
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNTdhOTM4OWZkOWU3OTc1MmRiNSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY3OTU3NzY5MywiZXhwIjoxNjc5NTc4ODkzfQ.9htwYqyuV7JcDiniaqZL6OnOIPJxXTPTl8Fr9T-SPl0"
 }
 
 ###
 // ------------- Follow ------------- \\
-GET http://localhost:3000/api/v1/follow-user
+GET http://localhost:3000/api/v1/follow-user/641c16bff29e0b12a7ae8277
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTM0MDYwOSwiZXhwIjoxNjc5MzQxODA5fQ.L-1UFek0qD_OK6KSaYBR1wDme4omWcVETcyn1NFHGQ4",
-    "idToFollow": "64183d84d63579a2626637dc"
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNTdhOTM4OWZkOWU3OTc1MmRiNSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY3OTU3NzY5MywiZXhwIjoxNjc5NTc4ODkzfQ.9htwYqyuV7JcDiniaqZL6OnOIPJxXTPTl8Fr9T-SPl0"
 }
 
 ###
 // ------------- Unfollow ------------- \\
-GET http://localhost:3000/api/v1/unfollow-user
+GET http://localhost:3000/api/v1/unfollow-user/641c16bff29e0b12a7ae8277
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MThhMzE0Njk1MmNlMTdjYjMwZWJiYyIsImlhdCI6MTY3OTMzNjIxMywiZXhwIjoxNjc5MzM3NDEzfQ.OgQOq22Fu6MpGM1qYJCbtrQY-5zS3-keStw-DuhoWR8",
-    "idToUnfollow": "64183d84d63579a2626637dc"
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNTdhOTM4OWZkOWU3OTc1MmRiNSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY3OTU3NzY5MywiZXhwIjoxNjc5NTc4ODkzfQ.9htwYqyuV7JcDiniaqZL6OnOIPJxXTPTl8Fr9T-SPl0"
 }

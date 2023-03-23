@@ -2,26 +2,26 @@ POST http://localhost:3000/api/v1/create-post
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsImlhdCI6MTY3OTU2NTM5NywiZXhwIjoxNjc5NTY2NTk3fQ.oZna4qaW54ZyGSyEJ7J5ri-oNDKGkuNyyn-dAPq-Bu8",
-    "title": "Right date",
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NTc3OTg0LCJleHAiOjE2Nzk1NzkxODR9.Qi0adehkAGohc5DG8siwoYIgMXizV1N2M-Z-MD4IVVY",
+    "title": "First post of Kristian",
     "content": "How the life can change the way you think."
 }
 
 ###
 
-GET http://localhost:3000/api/v1/posts-following
+GET http://localhost:3000/api/v1/posts-following/641c157a9389fd9e79752db5?page=1&limit=10
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MTgzZDg0ZDYzNTc5YTI2MjY2MzdkYyIsImlhdCI6MTY3OTM0MDYwOSwiZXhwIjoxNjc5MzQxODA5fQ.L-1UFek0qD_OK6KSaYBR1wDme4omWcVETcyn1NFHGQ4"
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNTdhOTM4OWZkOWU3OTc1MmRiNSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY3OTU3NzY5MywiZXhwIjoxNjc5NTc4ODkzfQ.9htwYqyuV7JcDiniaqZL6OnOIPJxXTPTl8Fr9T-SPl0"
 }
 
 ###
 
-PATCH http://localhost:3000/api/v1/modify-post/641c16bff29e0b12a7ae8277/641c16f0f29e0b12a7ae8279
+PATCH http://localhost:3000/api/v1/modify-post/641c157a9389fd9e79752db5/641c534d2f8c07e8070182d1
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsImlhdCI6MTY3OTU2MjcwNSwiZXhwIjoxNjc5NTYzOTA1fQ.889JGBy6xcOqqxhezcynTcGAag4Cz412X-9OUFjEK5Y",
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NTc4NjM2LCJleHAiOjE2Nzk1Nzk4MzZ9.wEaOHszTx2tKsyio1BnOrqtgnDNmM8RNyp6_TCyFlfI",
     "content": "I was attacked by murders."
 }

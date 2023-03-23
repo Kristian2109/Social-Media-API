@@ -4,7 +4,7 @@ const authUser = require("../middleware/verifyAuth");
 const { authorize } = require("../middleware/permissions");
 
 router.patch("/edit-user/:userId", authUser, authorize, async (req, res) => {
-    const userId = req.params.id;
+    const userId = req.params.userId;
     const { name, email, password } = req.body;
 
     const user = await User.findById(userId);
@@ -17,9 +17,9 @@ router.patch("/edit-user/:userId", authUser, authorize, async (req, res) => {
     return res.status(200).json({msg: "User edited!", success: true});
 });
 
-router.get("/user", authUser, async (req, res) => {
+router.get("/user/:userId", authUser, authorize, async (req, res) => {
     try {
-        const userData = await User.findById(req.user.id).populate("posts");
+        const userData = await User.findById(req.params.userId).populate("posts");
         res.status(200).json({userData, success: true});
 
     } catch (error) {
@@ -91,10 +91,10 @@ router.get("/unfollow-user/:userId", authUser, async (req, res) => {
             }
         });
     
-        res.status(200).json({success: true});
+        return res.status(200).json({success: true});
     } catch (error) {
         console.log(error.message);
-        res.status(400).json({success: false});
+        return res.status(400).json({success: false});
     }
 });
 

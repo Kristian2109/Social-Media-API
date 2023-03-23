@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { currentDateString } = require("./dataFunctions");
 
 const postSchema = new mongoose.Schema({
     userId: {
@@ -21,19 +22,6 @@ const postSchema = new mongoose.Schema({
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
 });
-
-function currentDateString() {
-    const date = new Date();
-    return  date.getFullYear() + "/"+ (date.getMonth() + 1) + "/" +
-            date.getDate() + "/" + date.getHours() + "/" + date.getMinutes();
-}
-
-// postSchema.pre('save', async (next) => {
-//     const date = new Date();
-//     const dateString = 
-//     this.createdAt = dateString;
-//     next();
-// });
 
 postSchema.virtual("postedBy", {
     ref: "User",

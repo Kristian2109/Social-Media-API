@@ -69,7 +69,7 @@ router.post("/login", async (req, res) => {
             });
         }
 
-        const accessToken = createAccessToken({id: user._id});
+        const accessToken = createAccessToken({id: user._id, role: user.role});
         const refreshToken = createRefreshToken({id: user._id});
 
         user.refreshTokenJWT = refreshToken;
@@ -104,7 +104,7 @@ router.post("/token", async (req, res) => {
             return res.status(403).json({error: "Invalid token!", success: false});
         }
 
-        const accessToken = createAccessToken({id: decoded.id, role: decoded.role});
+        const accessToken = createAccessToken({id: decoded.id, role: user.role});
         return res.status(200).json({accessToken});
 
     } catch (error) {
