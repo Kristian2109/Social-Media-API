@@ -1,9 +1,10 @@
 const User = require("../model/user");
 const router = require("express").Router();
 const authUser = require("../middleware/verifyAuth");
+const { authorize } = require("../middleware/permissions");
 
-router.post("/edit-user/", authUser, async (req, res) => {
-    const userId = req.user.id;
+router.patch("/edit-user/:userId", authUser, authorize, async (req, res) => {
+    const userId = req.params.id;
     const { name, email, password } = req.body;
 
     const user = await User.findById(userId);
@@ -27,23 +28,25 @@ router.get("/user", authUser, async (req, res) => {
     }
 });
 
-router.delete("/delete-user/:userId", authUser, async (req, res) => {
+router.delete("/delete-user/:userId", authUser, authorize, async (req, res) => {
     try {
-        const userIdToDelete = req.body.idToDelete;
-        if (userIdToDelete === req.user.id) {
-            await User.findByIdAndDelete(userIdToDelete);
-            return res.status(200).json({ success: true });
+        const userIdToDelete = req.params.userId;
+        const deletedUser = await User.findByIdAndDelete(userIdToDelete);
+        if (!deletedUser) {
+            return res.status(400).json({error: "False user id!", success: false});
         }
+
+        return res.status(200).json({success: true, deletedUser});
     } catch (error) {
         console.log(error.message);
         res.status(200).json({ success: false });
     }
 });
 
-router.get("/follow-user", authUser, async (req, res) => {
+router.get("/follow-user/:userId", authUser, async (req, res) => {
 
     try {
-        const userIdToFollow = req.body.idToFollow;
+        const userIdToFollow = req.params.userId;
 
         const followed = await User.findById(userIdToFollow);
         if (followed.followers.indexOf(req.user.id) >= 0) {
@@ -69,9 +72,9 @@ router.get("/follow-user", authUser, async (req, res) => {
     }
 });
 
-router.get("/unfollow-user", authUser, async (req, res) => {
+router.get("/unfollow-user/:userId", authUser, async (req, res) => {
     try {
-        const userIdToUnFollow = req.body.idToUnfollow;
+        const userIdToUnFollow = req.params.userId;
         const unfollowed = await User.findByIdAndUpdate(userIdToUnFollow, {
             $pull: {
                 followers: req.user.id
