@@ -63,7 +63,7 @@ router.get("/posts-following/:userId", verifyToken, authorize, async (req, res) 
         const currentUser = getOrSetCache(`user:${req.params.userId}`, async () => {
             return await User.findById(req.params.userId);s
         });
-        
+
         const currentUserFollowing = currentUser.following;
         console.log(currentUserFollowing);
 
@@ -80,8 +80,9 @@ router.get("/posts-following/:userId", verifyToken, authorize, async (req, res) 
 router.patch("/modify-post/:userId/:postId", verifyToken, authorize, async (req, res) => {
     try {
         const { title, content } = req.body;
-        let post = await Post.findOne({_id: req.params.postId});
-        console.log(post);
+        let post = getOrSetCache(`post:${req.params.postId}`, async () => {
+            return await Post.findById(req.params.postId);
+        });
 
         if (!post) {
             return res.status(400).json({error: "Invalid post id!", success: false});
@@ -89,9 +90,14 @@ router.patch("/modify-post/:userId/:postId", verifyToken, authorize, async (req,
 
         if (title) post.title = title;
         if (content) post.content = content;
-
         await post.save();
-        res.status(200).json({post, success: true});
+
+        updateCache(`user:${post.userId}`, async () => {
+            return await User.findById(post.userId);
+        });
+        updateCache(`post:${post._id}`, () => post);
+
+        return res.status(200).json({post, success: true});
     } catch (error) {
         console.log(error.message);
         return res.sendStatus(500);
@@ -104,6 +110,13 @@ router.delete("/delete-post/:userId/:postId", verifyToken, authorize, async (req
         if (!deletedPost) {
             return res.status(400).json({error: "Invalid post id!", success: false});
         }
+
+        await updateCache(`user:${deletedPost.userId}`, async () => {
+            return await User.findById(deletedPost.userId);
+        });
+        await deleteCache(`post:${deletedPost._id}`);
+
+        return res.json({deletedPost, success: true});
     } catch (error) {
         res.sendStatus(501);
     }
