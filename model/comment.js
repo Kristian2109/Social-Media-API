@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { currentDateString } = require("./dataFunctions");
+const { currentDateString } = require("./dateFunction");
 
 const commentSchema = new mongoose.Schema({
     userId: {
@@ -12,6 +12,7 @@ const commentSchema = new mongoose.Schema({
       ref: "Post",
       required: true
     },
+    title: String,
     createdAt: {
       type: String,
       default: currentDateString

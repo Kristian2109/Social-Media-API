@@ -2,18 +2,18 @@ POST http://localhost:3000/api/v1/create-post
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NTc3OTg0LCJleHAiOjE2Nzk1NzkxODR9.Qi0adehkAGohc5DG8siwoYIgMXizV1N2M-Z-MD4IVVY",
-    "title": "First post of Kristian",
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMzYwNTkyLCJleHAiOjE2ODAzNjE3OTJ9.5BpWYZXN_sf1KdcNknJGcDHCRmopGH8oYTJfYcjBOxM",
+    "title": "Second post of Kristian",
     "content": "How the life can change the way you think."
 }
 
 ###
 
-GET http://localhost:3000/api/v1/posts-following/641c157a9389fd9e79752db5?page=1&limit=10
+GET http://localhost:3000/api/v1/posts-following/641c16bff29e0b12a7ae8277?page=1&limit=10
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNTdhOTM4OWZkOWU3OTc1MmRiNSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY3OTU3NzY5MywiZXhwIjoxNjc5NTc4ODkzfQ.9htwYqyuV7JcDiniaqZL6OnOIPJxXTPTl8Fr9T-SPl0"
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMzU5MjgyLCJleHAiOjE2ODAzNjA0ODJ9.HLTy93YLvkDoQhiO3FW2L-8sa7UKDItak1_aH22KNlQ"
 }
 
 ###
@@ -32,4 +32,13 @@ Content-Type: application/json
 
 {
     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMzQwOTM0LCJleHAiOjE2ODAzNDIxMzR9.qS-XQSuU-NftAvR1Ks886JHjuO-N7ZBX2E_rytJ8k60"
+}
+
+###
+
+GET http://localhost:3000/api/v1/likes/641c53a92f8c07e8070182d8
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMzYwNTkyLCJleHAiOjE2ODAzNjE3OTJ9.5BpWYZXN_sf1KdcNknJGcDHCRmopGH8oYTJfYcjBOxM"
 }

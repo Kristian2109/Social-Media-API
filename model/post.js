@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { currentDateString } = require("./dataFunctions");
+const { currentDateString } = require("./dateFunction");
 
 const postSchema = new mongoose.Schema({
     userId: {

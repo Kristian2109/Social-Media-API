@@ -1,0 +1,38 @@
+POST http://localhost:3000/api/v1/add-comment/641c53a92f8c07e8070182d8
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMzU3OTYzLCJleHAiOjE2ODAzNTkxNjN9.BQVF8xQ3iwJbEM6WLHXuldkAulyh3y8_T04SO-QkYog",
+    "title": "Second comment",
+    "content": "Content of first comment"
+}
+
+###
+
+PATCH http://localhost:3000/api/v1/modify-comment/641c16bff29e0b12a7ae8277/64283bc7f6e067f7ec50ddc0
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMzU3OTYzLCJleHAiOjE2ODAzNTkxNjN9.BQVF8xQ3iwJbEM6WLHXuldkAulyh3y8_T04SO-QkYog",
+    "title": "Not second comment",
+    "content": "Content of first comment"
+}
+
+###
+
+PATCH http://localhost:3000/api/v1/like-comment/64283bc7f6e067f7ec50ddc0
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMzU5MjgyLCJleHAiOjE2ODAzNjA0ODJ9.HLTy93YLvkDoQhiO3FW2L-8sa7UKDItak1_aH22KNlQ"
+}
+
+###
+
+PATCH http://localhost:3000/api/v1/unlike-comment/641c16bff29e0b12a7ae8277/64283bc7f6e067f7ec50ddc0
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMzU5MjgyLCJleHAiOjE2ODAzNjA0ODJ9.HLTy93YLvkDoQhiO3FW2L-8sa7UKDItak1_aH22KNlQ"
+}
+

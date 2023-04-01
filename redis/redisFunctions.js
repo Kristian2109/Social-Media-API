@@ -20,8 +20,7 @@ function getOrSetCache(key, cb) {
     });
 }
 
-async function updateCache(key, cb) {
-    const newData = await cb;
+async function updateCache(key, newData) {
     const oldData = await redisClient.getSet(key, JSON.stringify(newData));
     return oldData;
 }

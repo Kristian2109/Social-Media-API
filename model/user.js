@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const { ROLES } = require("../middleware/permissions");
-const { currentDateString } = require("./dataFunctions");
+const { currentDateString } = require("./dateFunction");
 
 const userSchema = new mongoose.Schema({
     name: {

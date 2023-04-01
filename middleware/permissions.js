@@ -3,13 +3,12 @@ const ROLES = {
     USER: "User"
 }
 
-function canUserSeePosts(currentUser, userIdToVisit) {
+function hasUserAccess(currentUser, userIdToVisit) {
     return currentUser.id === userIdToVisit || currentUser.role === ROLES.ADMIN;
 }
 
 function authorize(req, res, next) {
-    if (!canUserSeePosts(req.user, req.params.userId)) {
-        console.log(req.user);
+    if (!hasUserAccess(req.user, req.params.userId)) {
         return res.sendStatus(401);
     }
 

@@ -50,11 +50,11 @@ Content-Type: application/json
 
 ### 
 // ------------- Get user with posts ------------- \\
-GET http://localhost:3000/api/v1/user/641c16bff29e0b12a7ae8277
+GET http://localhost:3000/api/v1/users/641c16bff29e0b12a7ae8277
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMzM5ODg5LCJleHAiOjE2ODAzNDEwODl9.dBIs-LteHBLPXQAJcZmXd-BfAC8CoiIr0FCILytHWek"
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMzU5NDg2LCJleHAiOjE2ODAzNjA2ODZ9.-Fha2_jdzrufQf0bQE7WYylME2opD7lT_3X97rBLvWs"
 }
 
 ###
@@ -63,7 +63,7 @@ GET http://localhost:3000/api/v1/follow-user/641c16bff29e0b12a7ae8277
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNTdhOTM4OWZkOWU3OTc1MmRiNSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY3OTU3NzY5MywiZXhwIjoxNjc5NTc4ODkzfQ.9htwYqyuV7JcDiniaqZL6OnOIPJxXTPTl8Fr9T-SPl0"
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMzU5NDg2LCJleHAiOjE2ODAzNjA2ODZ9.-Fha2_jdzrufQf0bQE7WYylME2opD7lT_3X97rBLvWs"
 }
 
 ###
@@ -72,5 +72,5 @@ GET http://localhost:3000/api/v1/unfollow-user/641c16bff29e0b12a7ae8277
 Content-Type: application/json
 
 {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNTdhOTM4OWZkOWU3OTc1MmRiNSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY3OTU3NzY5MywiZXhwIjoxNjc5NTc4ODkzfQ.9htwYqyuV7JcDiniaqZL6OnOIPJxXTPTl8Fr9T-SPl0"
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMzU5NDg2LCJleHAiOjE2ODAzNjA2ODZ9.-Fha2_jdzrufQf0bQE7WYylME2opD7lT_3X97rBLvWs"
 }

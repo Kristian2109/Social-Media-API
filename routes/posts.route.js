@@ -3,7 +3,7 @@ const User = require("../model/user");
 const router = require("express").Router();
 const verifyToken = require("../middleware/verifyAuth");
 const { authorize } = require("../middleware/permissions");
-const { getOrSetCache, updateCache } = require("../redis/redisFunctions");
+const { getOrSetCache, updateCache, deleteCache } = require("../redis/redisFunctions");
 
 // POST | /api/v1/posts/:postId | get a post with all comments | private
 router.get("/posts/:postId", verifyToken, async (req, res) => {
@@ -38,10 +38,7 @@ router.post("/create-post", verifyToken, async (req, res) => {
         });
 
         await newPost.save();
-
-        updateCache(`user:${newPost.userId}`, async () => {
-            return await User.findById(newPost.userId);
-        });
+        await deleteCache(`user:${newPost.userId}`);
 
         return res.status(200).json({msg: "Post created!", success: true});
     } catch (error) {
@@ -57,11 +54,11 @@ async function getPostsOfUsersWithPagination(page, limit, idsOfFollowed) {
     return postsOfFollowing;
 }
 
-// GET | /api/v1/posts-following | shows the posts of the followed users of the current | private
+// GET | /api/v1/posts-following\:userId | shows the posts of the followed users of the current | private
 router.get("/posts-following/:userId", verifyToken, authorize, async (req, res) => {
     try {
         const currentUser = getOrSetCache(`user:${req.params.userId}`, async () => {
-            return await User.findById(req.params.userId);s
+            return await User.findById(req.params.userId);
         });
 
         const currentUserFollowing = currentUser.following;
@@ -92,10 +89,8 @@ router.patch("/modify-post/:userId/:postId", verifyToken, authorize, async (req,
         if (content) post.content = content;
         await post.save();
 
-        updateCache(`user:${post.userId}`, async () => {
-            return await User.findById(post.userId);
-        });
-        updateCache(`post:${post._id}`, () => post);
+        await deleteCache(`user:${newPost.userId}`);
+        await deleteCache(`post:${newPost._id}`);
 
         return res.status(200).json({post, success: true});
     } catch (error) {
@@ -104,6 +99,7 @@ router.patch("/modify-post/:userId/:postId", verifyToken, authorize, async (req,
     }
 });
 
+// DELETE | /api/v1/delete-post/:userId/:postId | private and admin access| deletes the post 
 router.delete("/delete-post/:userId/:postId", verifyToken, authorize, async (req, res) => {
     try {
         const deletedPost = await Post.findByIdAndDelete(req.params.postId);
@@ -111,21 +107,24 @@ router.delete("/delete-post/:userId/:postId", verifyToken, authorize, async (req
             return res.status(400).json({error: "Invalid post id!", success: false});
         }
 
-        await updateCache(`user:${deletedPost.userId}`, async () => {
-            return await User.findById(deletedPost.userId);
-        });
-        await deleteCache(`post:${deletedPost._id}`);
+        await deleteCache(`user:${newPost.userId}`);
+        await deleteCache(`post:${newPost._id}`);
 
         return res.json({deletedPost, success: true});
     } catch (error) {
-        res.sendStatus(501);
+        return res.sendStatus(501);
     }
 });
 
+// GET | /api/v1/like-post/:postId | private | like
 router.get("/like-post/:postId", verifyToken, async (req, res) => {
     try {
         const userId = req.user.id;
-        let post = await Post.findById(userId);
+        const postId = req.params.postId;
+
+        let post = getOrSetCache(`post:${postId}`, async () => {
+            return await Post.findById(postId);
+        });
 
         if (!post) {
             return res.status(400).json({error: "Wrong post id!", success: false});
@@ -138,16 +137,22 @@ router.get("/like-post/:postId", verifyToken, async (req, res) => {
         post.likes.push(userId);
         await post.save();
 
+        updateCache(`post:${post._id}`, () => post);
+
         return res.status(200).json({success: true, post});
     } catch (error) {
         return res.sendStatus(500);
     }
 });
 
+// GET | /api/v1/like-post/:postId | private and admin| unlike
 router.get("/unlike-post/:userId/:postId", verifyToken, authorize, async (req, res) => {
     try {
-        const userId = req.params.id;
-        let post = await Post.findById(userId);
+        const userId = req.params.userId;
+        const postId = req.params.postId;
+        let post = getOrSetCache(`post:${postId}`, async () => {
+            return await Post.findById(postId);
+        });
 
         if (!post) {
             return res.status(400).json({error: "Wrong post id!", success: false});
@@ -160,32 +165,44 @@ router.get("/unlike-post/:userId/:postId", verifyToken, authorize, async (req, r
         post.likes = post.likes.filter(likeId => likeId != userId);
         await post.save();
 
+        updateCache(`post:${post._id}`, () => post);
+
         return res.status(200).json({success: true, post});
     } catch (error) {
         console.log(error.message);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 
+// GET | /api/v1/likes/:postId | private | 
+// get the names of the users that have liked the post
 router.get("/likes/:postId", verifyToken, async (req, res) => {
     try {
-        const currentUserFollowed= await User.findById(req.user.id, "following").following;
-        const post = await Post.findById(req.params.postId);
+        const currentUser = await getOrSetCache(`user:${req.user.id}`, async () => {
+            return await User.findById(req.user.id).populate("posts");
+        });
+
+        const followedUsers = currentUser.followers;
+
+        const post = await getOrSetCache(`post:${req.params.postId}`, async () => {
+            return await Post.findById(req.params.postId);
+        });
 
         if (!post) {
             res.status(400).json({error: "False post id", success: false});
         }
 
-        if (currentUserFollowed.indexOf(post.userId) < 0) {
+        if (followedUsers.indexOf(post.userId) < 0) {
             return res.status(401).json({error: "You aren't a follower of this user", success: false});
         }
 
-        const namesOfFollwed = await User.find({_id: post.likes}, "name");
-        res.status(200).json({data: namesOfFollwed, success: false});
+        const namesOfUsersThatLike = await User.find({_id: post.likes}, "name");
+        
+        return res.status(200).json({data: namesOfUsersThatLike, success: false});
 
     } catch (error) {
         console.log(error.message);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 

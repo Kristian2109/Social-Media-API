@@ -15,11 +15,13 @@ router.patch("/edit-user/:userId", authUser, authorize, async (req, res) => {
     if (password) user.password = password;
 
     await user.save();
+
     await updateCache(`user:${user._id}`, () => user);
+
     return res.status(200).json({msg: "User edited!", success: true});
 });
 
-router.get("/user/:userId", authUser, authorize, async (req, res) => {
+router.get("/users/:userId", authUser, authorize, async (req, res) => {
     try {
         const userData = await getOrSetCache(`user:${req.params.userId}`, async () => {
             return await User.findById(req.params.userId).populate("posts");
@@ -44,6 +46,7 @@ router.delete("/delete-user/:userId", authUser, authorize, async (req, res) => {
         }
 
         await deleteCache(`user:${deletedUser._id}`);
+
         return res.status(200).json({success: true, deletedUser});
     } catch (error) {
         console.log(error.message);
@@ -73,8 +76,9 @@ router.get("/follow-user/:userId", authUser, async (req, res) => {
             }
         });
     
-        await updateCache(`user:${req.user.id}`, () => currentUser);
-        await updateCache(`user:${userIdToFollow}`, () => followed);
+        await updateCache(`user:${req.user.id}`, currentUser);
+        await updateCache(`user:${userIdToFollow}`, followed);
+
         return res.status(200).json({success: true});
     } catch (error) {
         return res.status(400).json({success: false});
@@ -94,14 +98,15 @@ router.get("/unfollow-user/:userId", authUser, async (req, res) => {
             return res.status(401).json({error: "The user you want to unfollow doesn't exist.", success: false});
         }
     
-        const current = await User.findByIdAndUpdate(req.user.id, {
+        const currentUser = await User.findByIdAndUpdate(req.user.id, {
             $pull: {
                 following: userIdToUnFollow
             }
         });
     
-        await updateCache(`user:${req.user.id}`, () => currentUser);
-        await updateCache(`user:${userIdToUnFollow}`, () => unfollowed);
+        await updateCache(`user:${req.user.id}`, currentUser);
+        await updateCache(`user:${userIdToUnFollow}`, unfollowed);
+
         return res.status(200).json({success: true});
     } catch (error) {
         console.log(error.message);
