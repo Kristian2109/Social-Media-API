@@ -25,3 +25,11 @@ Content-Type: application/json
     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NTc4NjM2LCJleHAiOjE2Nzk1Nzk4MzZ9.wEaOHszTx2tKsyio1BnOrqtgnDNmM8RNyp6_TCyFlfI",
     "content": "I was attacked by murders."
 }
+
+### 
+GET http://localhost:3000/api/v1/posts/641c53a92f8c07e8070182d8
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWMxNmJmZjI5ZTBiMTJhN2FlODI3NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMzQwOTM0LCJleHAiOjE2ODAzNDIxMzR9.qS-XQSuU-NftAvR1Ks886JHjuO-N7ZBX2E_rytJ8k60"
+}

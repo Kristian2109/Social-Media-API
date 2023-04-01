@@ -3,11 +3,15 @@ const User = require("../model/user");
 const router = require("express").Router();
 const verifyToken = require("../middleware/verifyAuth");
 const { authorize } = require("../middleware/permissions");
+const { getOrSetCache, updateCache } = require("../redis/redisFunctions");
 
 // POST | /api/v1/posts/:postId | get a post with all comments | private
 router.get("/posts/:postId", verifyToken, async (req, res) => {
     try {
-        const post = await Post.findById(req.params.postId).populate("comments");
+        const post = await getOrSetCache(`post:${req.params.postId}`, async () => {
+            return await Post.findById(req.params.postId).populate("comments");
+        });
+
         if (!post) {
             return res.status(400).json({error: "Unexisting post", success: false});
         }
@@ -17,7 +21,7 @@ router.get("/posts/:postId", verifyToken, async (req, res) => {
         console.log(error.message);
         return res.sendStatus(500);
     }
-})
+});
 
 // POST | /api/v1/create-post | current user adds a post | private
 router.post("/create-post", verifyToken, async (req, res) => {
@@ -34,10 +38,15 @@ router.post("/create-post", verifyToken, async (req, res) => {
         });
 
         await newPost.save();
-        res.status(200).json({msg: "Post created!", success: true});
+
+        updateCache(`user:${newPost.userId}`, async () => {
+            return await User.findById(newPost.userId);
+        });
+
+        return res.status(200).json({msg: "Post created!", success: true});
     } catch (error) {
         console.log(error.message);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 
@@ -51,7 +60,10 @@ async function getPostsOfUsersWithPagination(page, limit, idsOfFollowed) {
 // GET | /api/v1/posts-following | shows the posts of the followed users of the current | private
 router.get("/posts-following/:userId", verifyToken, authorize, async (req, res) => {
     try {
-        const currentUser = await User.findById(req.params.userId);
+        const currentUser = getOrSetCache(`user:${req.params.userId}`, async () => {
+            return await User.findById(req.params.userId);s
+        });
+        
         const currentUserFollowing = currentUser.following;
         console.log(currentUserFollowing);
 

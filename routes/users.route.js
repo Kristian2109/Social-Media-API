@@ -2,6 +2,7 @@ const User = require("../model/user");
 const router = require("express").Router();
 const authUser = require("../middleware/verifyAuth");
 const { authorize } = require("../middleware/permissions");
+const { getOrSetCache, updateCache, deleteCache } = require("../redis/redisFunctions");
 
 router.patch("/edit-user/:userId", authUser, authorize, async (req, res) => {
     const userId = req.params.userId;
@@ -14,17 +15,23 @@ router.patch("/edit-user/:userId", authUser, authorize, async (req, res) => {
     if (password) user.password = password;
 
     await user.save();
+    await updateCache(`user:${user._id}`, () => user);
     return res.status(200).json({msg: "User edited!", success: true});
 });
 
 router.get("/user/:userId", authUser, authorize, async (req, res) => {
     try {
-        const userData = await User.findById(req.params.userId).populate("posts");
-        res.status(200).json({userData, success: true});
+        const userData = await getOrSetCache(`user:${req.params.userId}`, async () => {
+            return await User.findById(req.params.userId).populate("posts");
+        });
+
+        if (!userData) return res.status(401).json({error: "Not such user ID!", success: false});
+
+        return res.status(200).json({userData, success: true});
 
     } catch (error) {
         console.log(error.message);
-        res.sendStatus(500);
+        return res.sendStatus(500);
     }
 });
 
@@ -36,15 +43,15 @@ router.delete("/delete-user/:userId", authUser, authorize, async (req, res) => {
             return res.status(400).json({error: "False user id!", success: false});
         }
 
+        await deleteCache(`user:${deletedUser._id}`);
         return res.status(200).json({success: true, deletedUser});
     } catch (error) {
         console.log(error.message);
-        res.status(200).json({ success: false });
+        return res.status(200).json({ success: false });
     }
 });
 
 router.get("/follow-user/:userId", authUser, async (req, res) => {
-
     try {
         const userIdToFollow = req.params.userId;
 
@@ -60,15 +67,17 @@ router.get("/follow-user/:userId", authUser, async (req, res) => {
             return res.status(401).json({error: "The user you want to follow doesn't exist.", success: false});
         }
     
-        await User.findByIdAndUpdate(req.user.id, {
+        const currentUser = await User.findByIdAndUpdate(req.user.id, {
             $push: {
                 following: userIdToFollow
             }
         });
     
-        res.status(200).json({success: true});
+        await updateCache(`user:${req.user.id}`, () => currentUser);
+        await updateCache(`user:${userIdToFollow}`, () => followed);
+        return res.status(200).json({success: true});
     } catch (error) {
-        res.status(400).json({success: false});
+        return res.status(400).json({success: false});
     }
 });
 
@@ -85,12 +94,14 @@ router.get("/unfollow-user/:userId", authUser, async (req, res) => {
             return res.status(401).json({error: "The user you want to unfollow doesn't exist.", success: false});
         }
     
-        await User.findByIdAndUpdate(req.user.id, {
+        const current = await User.findByIdAndUpdate(req.user.id, {
             $pull: {
                 following: userIdToUnFollow
             }
         });
     
+        await updateCache(`user:${req.user.id}`, () => currentUser);
+        await updateCache(`user:${userIdToUnFollow}`, () => unfollowed);
         return res.status(200).json({success: true});
     } catch (error) {
         console.log(error.message);
@@ -99,4 +110,3 @@ router.get("/unfollow-user/:userId", authUser, async (req, res) => {
 });
 
 module.exports = router;
-
