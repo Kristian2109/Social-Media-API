@@ -9,7 +9,7 @@ function hasUserAccess(currentUser, userIdToVisit) {
 
 function authorize(req, res, next) {
     if (!hasUserAccess(req.user, req.params.userId)) {
-        return res.sendStatus(401);
+        return res.sendStatus(403);
     }
 
     next();

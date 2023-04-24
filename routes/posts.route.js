@@ -28,7 +28,7 @@ router.post("/create-post", verifyToken, async (req, res) => {
     try {
         const { title, content } = req.body;
         if (!title || !content) {
-            res.status(401).json({error: "Unfilled data", success: false});
+            res.status(400).json({error: "Unfilled data", success: false});
         }
 
         const newPost = new Post({
@@ -104,7 +104,7 @@ router.delete("/delete-post/:userId/:postId", verifyToken, authorize, async (req
     try {
         const deletedPost = await Post.findByIdAndDelete(req.params.postId);
         if (!deletedPost) {
-            return res.status(400).json({error: "Invalid post id!", success: false});
+            return res.status(404).json({error: "Invalid post id!", success: false});
         }
 
         await deleteCache(`user:${newPost.userId}`);
